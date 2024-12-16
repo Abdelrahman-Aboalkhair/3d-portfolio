@@ -6,14 +6,16 @@ import {
   updateService,
 } from '../controllers/service.controller.js'
 
+import { isLoggedIn, authorizeRole } from '../middlewares/auth.middleware.js'
+
 const router = express.Router()
 
-router.post('/', createService)
+router.post('/', isLoggedIn, authorizeRole, createService)
 
-router.get('/:userId', getAllServices)
+router.get('/', isLoggedIn, getAllServices)
 
-router.put('/:id', updateService)
+router.put('/:serviceId', isLoggedIn, authorizeRole, updateService)
 
-router.delete('/:id', deleteService)
+router.delete('/:serviceId', isLoggedIn, authorizeRole, deleteService)
 
 export default router

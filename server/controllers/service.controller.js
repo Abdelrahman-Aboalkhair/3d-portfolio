@@ -4,21 +4,27 @@ import { v2 as cloudinary } from 'cloudinary'
 
 export const createService = async (req, res) => {
   try {
-    const { title, description, price, userId, image } = req.body
+    const { id: userId } = req.user
+    const { title, description, price } = req.body
 
-    const uploadedImage = await cloudinary.uploader.upload(image, {
-      folder: 'portfolio_services',
-    })
+    if (!title || !description || !price || !userId) {
+      return res.status(400).json({ error: 'All fields are required' })
+    }
+    // if (image) {
+    //   const uploadedImage = await cloudinary.uploader.upload(image, {
+    //     folder: 'portfolio_services',
+    //   })
+    // }
 
     const newService = new Service({
       title,
       description,
       price,
       user: userId,
-      image: {
-        public_id: uploadedImage.public_id,
-        url: uploadedImage.secure_url,
-      },
+      // image: {
+      //   public_id: uploadedImage.public_id,
+      //   url: uploadedImage.secure_url,
+      // },
     })
 
     const savedService = await newService.save()
@@ -28,7 +34,10 @@ export const createService = async (req, res) => {
       $push: { services: savedService._id },
     })
 
-    res.status(201).json(savedService)
+    res.status(201).json({
+      message: 'Service created successfully',
+      savedService,
+    })
   } catch (err) {
     res.status(500).json({ error: err.message })
   }
@@ -36,8 +45,12 @@ export const createService = async (req, res) => {
 
 export const getAllServices = async (req, res) => {
   try {
-    const services = await Service.find({ user: req.params.userId })
-    res.status(200).json(services)
+    const { id } = req.user
+    const services = await Service.find({ user: id })
+    res.status(200).json({
+      message: 'Services retrieved successfully',
+      services,
+    })
   } catch (err) {
     res.status(500).json({ error: err.message })
   }
@@ -59,11 +72,14 @@ export const updateService = async (req, res) => {
     }
 
     const updatedService = await Service.findByIdAndUpdate(
-      req.params.id,
+      req.params.serviceId,
       updatedFields,
       { new: true }
     )
-    res.status(200).json(updatedService)
+    res.status(200).json({
+      message: 'Service updated successfully',
+      updatedService,
+    })
   } catch (err) {
     res.status(500).json({ error: err.message })
   }
@@ -71,17 +87,18 @@ export const updateService = async (req, res) => {
 
 export const deleteService = async (req, res) => {
   try {
-    const service = await Service.findById(req.params.id)
+    const service = await Service.findById(req.params.serviceId)
     if (!service) return res.status(404).json({ error: 'Service not found' })
 
     // Remove service from Cloudinary
-    await cloudinary.uploader.destroy(service.image.public_id)
+    // await cloudinary.uploader.destroy(service.image.public_id)
 
     // Delete service and update user
     await User.findByIdAndUpdate(service.user, {
       $pull: { services: service._id },
     })
-    await service.remove()
+
+    await service.deleteOne({ _id: service._id })
 
     res.status(200).json({ message: 'Service deleted successfully' })
   } catch (err) {
