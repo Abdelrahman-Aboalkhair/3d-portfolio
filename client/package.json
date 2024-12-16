@@ -21,6 +21,8 @@
     "react-hook-form": "^7.54.1",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.0.2",
+    "react-slick": "^0.30.2",
+    "slick-carousel": "^1.8.1",
     "three": "^0.171.0"
   },
   "devDependencies": {

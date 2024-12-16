@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0b0119;
+    --btn-primary: #7127ba;
+    --foreground: #ededed;
+  }
+}
+
+.layout {
+  @apply min-h-screen w-full px-[100px] py-[80px] text-white capitalize;
+}
+
+.link {
+  @apply text-[15px];
+}
+
+.btn-primary {
+  @apply bg-[--btn-primary] text-white px-[30px] rounded-full text-[15px] py-[9px] font-[450] hover:opacity-90;
+}
+
+.btn-secondary {
+  @apply bg-inherit border-2 border-[#693B93] hover:border-transparent hover:bg-[#693B93]
+   transition-colors duration-300 text-white px-[22px] rounded-md text-[9px] py-[6px] font-[450] hover:opacity-90;
+}
+
+html,
+body,
+#root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Rubik', sans-serif;
+  transition: all 0.1s ease-in-out;
+}
+
+.dark {
+  background-color: var(--background);
+  color: white;
+}
+
+canvas {
+  touch-action: none; /* For experiences on mobile */
+}
+
+.slider-item {
+  width: 50px;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-right: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}

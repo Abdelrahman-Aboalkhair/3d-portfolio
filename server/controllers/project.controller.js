@@ -4,20 +4,16 @@ import { v2 as cloudinary } from 'cloudinary'
 
 export const createProject = async (req, res) => {
   try {
-    const {
-      title,
-      description,
-      technologies,
-      githubLink,
-      liveLink,
-      userId,
-      image,
-    } = req.body
+    const { title, description, technologies, githubLink, liveLink } = req.body
+    const { id: userId } = req.user
 
-    const uploadedImage = await cloudinary.uploader.upload(image, {
-      folder: 'portfolio_projects',
-    })
+    // Validate the user
+    const user = await User.findById(userId)
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' })
+    }
 
+    // Create a new project instance
     const newProject = new Project({
       title,
       description,
@@ -25,28 +21,31 @@ export const createProject = async (req, res) => {
       githubLink,
       liveLink,
       user: userId,
-      image: {
-        public_id: uploadedImage.public_id,
-        url: uploadedImage.secure_url,
-      },
     })
 
+    // Save the project
     const savedProject = await newProject.save()
 
-    // Add project to the user's projects array
-    await User.findByIdAndUpdate(userId, {
-      $push: { projects: savedProject._id },
-    })
+    // Associate the project with the user
+    user.projects.push(savedProject._id)
+    await user.save()
 
-    res.status(201).json(savedProject)
+    res.status(201).json({
+      message: 'Project created successfully',
+      savedProject,
+    })
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    console.error('Error creating project:', err)
+    res
+      .status(500)
+      .json({ error: 'An unexpected error occurred. Please try again later.' })
   }
 }
 
 export const getAllProjects = async (req, res) => {
   try {
-    const projects = await Project.find({ user: req.params.userId })
+    const { id } = req.user
+    const projects = await Project.find({ user: id })
     res.status(200).json(projects)
   } catch (err) {
     res.status(500).json({ error: err.message })
@@ -76,7 +75,7 @@ export const updateProject = async (req, res) => {
     }
 
     const updatedProject = await Project.findByIdAndUpdate(
-      req.params.id,
+      req.params.projectId,
       updatedFields,
       { new: true }
     )
@@ -88,17 +87,16 @@ export const updateProject = async (req, res) => {
 
 export const deleteProject = async (req, res) => {
   try {
-    const project = await Project.findById(req.params.id)
+    const project = await Project.findById(req.params.projectId)
+    console.log('project: ', project)
     if (!project) return res.status(404).json({ error: 'Project not found' })
 
-    // Remove project from Cloudinary
-    await cloudinary.uploader.destroy(project.image.public_id)
-
     // Delete project and update user
-    await User.findByIdAndUpdate(project.user, {
+    const user = await User.findByIdAndUpdate(project.user, {
       $pull: { projects: project._id },
     })
-    await project.remove()
+
+    await project.deleteOne({ _id: project._id })
 
     res.status(200).json({ message: 'Project deleted successfully' })
   } catch (err) {

@@ -1,6 +1,6 @@
+import userModel from '../models/user.model.js'
 import AppError from '../utils/error.utils.js'
 import jwt from 'jsonwebtoken'
-import userModel from '../models/user.model.js'
 
 export const isLoggedIn = async (req, res, next) => {
   const { token } = req.cookies
@@ -10,20 +10,23 @@ export const isLoggedIn = async (req, res, next) => {
   }
 
   const userDetails = await jwt.verify(token, process.env.JWT_SECRET)
-  req.user = userDetails
+
+  const freshUser = await userModel.findById(userDetails.id)
+
+  if (!freshUser) {
+    return next(new AppError('User not found', 400))
+  }
+
+  req.user = freshUser
 
   next()
 }
 
 // authorised roles
-export const authorisedRoles =
-  (...roles) =>
-  async (req, res, next) => {
-    const currentUserRoles = req.user.role
-    if (!roles.includes(currentUserRoles)) {
-      return next(
-        new AppError('You do not have permission to access this routes', 403)
-      )
-    }
-    next()
-  }
+export const authorizeRole = async (req, res, next) => {
+  const isAdmin = req.user.isAdmin
+  console.log('isAdmin: ', isAdmin)
+  if (!isAdmin)
+    return next(new AppError('You are not allowed to access this route', 403))
+  next()
+}

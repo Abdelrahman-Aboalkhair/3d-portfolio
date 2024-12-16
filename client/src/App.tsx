@@ -1,26 +1,17 @@
-import { Canvas } from '@react-three/fiber'
-import Experience from './Experience'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/home/Home'
 import Projects from './pages/projects/Projects'
 import Services from './pages/services/Services'
 import About from './pages/about/About'
 import Contact from './pages/contact/Contact'
+import Navbar from './layout/Navbar'
+import { ThemeProvider } from './context/ThemeContext'
 
 const App = () => {
   return (
-    <>
+    <ThemeProvider>
+      <Navbar />
       {/* 3D Experience */}
-      <Canvas
-        camera={{
-          fov: 45,
-          near: 0.1,
-          far: 200,
-          position: [1, 2, 6],
-        }}
-      >
-        <Experience />
-      </Canvas>
 
       {/* Routes */}
       <Routes>
@@ -30,7 +21,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
-    </>
+    </ThemeProvider>
   )
 }
 

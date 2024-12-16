@@ -7,14 +7,16 @@ import {
   updateProject,
 } from '../controllers/project.controller.js'
 
+import { authorizeRole, isLoggedIn } from '../middlewares/auth.middleware.js'
+
 const router = express.Router()
 
-router.post('/', createProject)
+router.get('/', isLoggedIn, getAllProjects)
 
-router.get('/:userId', getAllProjects)
+router.post('/', isLoggedIn, authorizeRole, createProject)
 
-router.put('/:id', updateProject)
+router.put('/:projectId', isLoggedIn, authorizeRole, updateProject)
 
-router.delete('/:id', deleteProject)
+router.delete('/:projectId', isLoggedIn, authorizeRole, deleteProject)
 
 export default router

@@ -14,10 +14,10 @@ const cookieOptions = {
 // Register
 export const register = async (req, res, next) => {
   try {
-    const { fullName, email, password, role } = req.body
+    const { name, email, password, isAdmin } = req.body
 
     // Check if user misses any fields
-    if (!fullName || !email || !password) {
+    if (!name || !email || !password) {
       return next(new AppError('All fields are required', 400))
     }
 
@@ -29,10 +29,10 @@ export const register = async (req, res, next) => {
 
     // Save user in the database and log the user in
     const user = await userModel.create({
-      fullName,
+      name,
       email,
       password,
-      role,
+      isAdmin,
       avatar: {
         public_id: email,
         secure_url: '',
@@ -49,7 +49,7 @@ export const register = async (req, res, next) => {
     if (req.file) {
       try {
         const result = await cloudinary.v2.uploader.upload(req.file.path, {
-          folder: 'Learning-Management-System',
+          folder: 'portfolio_users',
           width: 250,
           height: 250,
           gravity: 'faces',
