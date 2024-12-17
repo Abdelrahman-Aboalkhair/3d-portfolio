@@ -1,8 +1,12 @@
 import Project from '../models/project.model.js'
 import User from '../models/user.model.js'
 import { v2 as cloudinary } from 'cloudinary'
+import AppError from '../utils/error.utils.js'
+import { uploadImageToCloudinary } from '../helpers/uploadImageToCloudinary.js'
+import fs from 'fs'
+import { handleImageUpdate } from '../utils/handleImageUpdate.js'
 
-export const createProject = async (req, res) => {
+export const createProject = async (req, res, next) => {
   try {
     const { title, description, technologies, githubLink, liveLink } = req.body
     const { id: userId } = req.user
@@ -13,17 +17,31 @@ export const createProject = async (req, res) => {
       return res.status(404).json({ error: 'User not found' })
     }
 
-    // Create a new project instance
-    const newProject = new Project({
+    // Prepare project data
+    const projectData = {
       title,
       description,
       technologies,
       githubLink,
       liveLink,
       user: userId,
-    })
+      image: { public_id: title, secure_url: '' },
+    }
 
-    // Save the project
+    // Handle file upload to Cloudinary
+    if (req.file) {
+      const uploadResult = await uploadImageToCloudinary(req.file.path)
+      if (uploadResult) {
+        projectData.image.public_id = uploadResult.public_id
+        projectData.image.secure_url = uploadResult.secure_url
+
+        // Remove the uploaded file from the server
+        fs.rmSync(`uploads/${req.file.filename}`)
+      }
+    }
+
+    // Create and save the project
+    const newProject = new Project(projectData)
     const savedProject = await newProject.save()
 
     // Associate the project with the user
@@ -36,9 +54,12 @@ export const createProject = async (req, res) => {
     })
   } catch (err) {
     console.error('Error creating project:', err)
-    res
-      .status(500)
-      .json({ error: 'An unexpected error occurred. Please try again later.' })
+    next(
+      new AppError(
+        err.message || 'An unexpected error occurred. Please try again later.',
+        500
+      )
+    )
   }
 }
 
@@ -52,26 +73,28 @@ export const getAllProjects = async (req, res) => {
   }
 }
 
-export const updateProject = async (req, res) => {
+export const updateProject = async (req, res, next) => {
   try {
-    const { title, description, technologies, githubLink, liveLink, image } =
-      req.body
+    const { title, description, technologies, githubLink, liveLink } = req.body
     const updatedFields = {
       title,
       description,
       technologies,
       githubLink,
       liveLink,
+      image: {
+        public_id: title,
+        secure_url: '',
+      },
     }
 
-    if (image) {
-      const uploadedImage = await cloudinary.uploader.upload(image, {
-        folder: 'portfolio_projects',
-      })
-      updatedFields.image = {
-        public_id: uploadedImage.public_id,
-        url: uploadedImage.secure_url,
-      }
+    const project = await Project.findById(req.params.projectId)
+    if (!project) {
+      return res.status(404).json({ error: 'Project not found' })
+    }
+
+    if (req.file) {
+      await handleImageUpdate(project, req.file)
     }
 
     const updatedProject = await Project.findByIdAndUpdate(
@@ -79,9 +102,15 @@ export const updateProject = async (req, res) => {
       updatedFields,
       { new: true }
     )
+
     res.status(200).json(updatedProject)
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    next(
+      new AppError(
+        err.message || 'An error occurred while updating the project',
+        500
+      )
+    )
   }
 }
 

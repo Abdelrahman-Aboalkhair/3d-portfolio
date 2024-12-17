@@ -5,9 +5,9 @@ import { v2 as cloudinary } from 'cloudinary'
 export const createService = async (req, res) => {
   try {
     const { id: userId } = req.user
-    const { title, description, price } = req.body
+    const { title, description } = req.body
 
-    if (!title || !description || !price || !userId) {
+    if (!title || !description || !userId) {
       return res.status(400).json({ error: 'All fields are required' })
     }
     // if (image) {
@@ -19,7 +19,6 @@ export const createService = async (req, res) => {
     const newService = new Service({
       title,
       description,
-      price,
       user: userId,
       // image: {
       //   public_id: uploadedImage.public_id,
@@ -58,7 +57,7 @@ export const getAllServices = async (req, res) => {
 
 export const updateService = async (req, res) => {
   try {
-    const { title, description, price, image } = req.body
+    const { title, description, image } = req.body
     const updatedFields = { title, description, price }
 
     if (image) {

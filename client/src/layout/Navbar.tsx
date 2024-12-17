@@ -2,21 +2,22 @@ import { NavLink } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import { IoSunnySharp } from 'react-icons/io5'
 import { BsFillMoonStarsFill } from 'react-icons/bs'
+import { useAppSelector } from '../hooks/useAppSelector'
 
 const Navbar = () => {
   const { toggleTheme, theme } = useTheme()
+  const isAdmin = useAppSelector((state) => state.auth.isAdmin)
+  console.log('isAdmin: ', isAdmin)
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)
+  console.log('isLoggedIn: ', isLoggedIn)
   return (
-    <header
-      className={`fixed left-[7rem] right-[7rem] top-0 whitespace-nowrap z-[100]`}
-    >
-      <nav className="flex items-center justify-between mt-3 pb-8 px-10">
-        <div className="flex items-center">
-          <NavLink to={'/'} className="flex items-center font-bold text-2xl">
-            Logo
-          </NavLink>
-        </div>
+    <header className="px-[10.4%] py-5 flex items-center justify-center">
+      <nav className="flex items-center justify-center gap-[5rem] text-[14px] flex-1 capitalize font-medium">
+        <NavLink to={'/'} className="font-bold text-[25px] ">
+          A.
+        </NavLink>
 
-        <ul className="hidden lg:flex items-center justify-center gap-[50px] text-[14px] flex-1">
+        <ul className="flex items-center justify-center gap-[3.5rem] w-[30%] flex-1">
           <NavLink
             className={({ isActive }) =>
               isActive ? 'link opacity-100' : 'link opacity-50'
@@ -63,18 +64,31 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center justify-center">
           <button
             onClick={toggleTheme}
-            style={{ background: 'none', border: 'none' }}
+            className="border-[1px] border-gray-300 dark:border-gray-700 rounded-full p-[10px]"
           >
             {theme === 'light' && (
-              <BsFillMoonStarsFill color="#000" size={22} />
+              <BsFillMoonStarsFill color="#000" size={18} />
             )}
 
-            {theme === 'dark' && <IoSunnySharp color="#fff" size={24} />}
+            {theme === 'dark' && <IoSunnySharp color="#fff" size={20} />}
           </button>
 
-          <NavLink className="btn-primary ml-6" to="/contact">
-            Let's talk!
-          </NavLink>
+          {isLoggedIn && isAdmin && (
+            <NavLink className="btn-primary ml-6" to="/dashboard">
+              Dashboard
+            </NavLink>
+          )}
+          {!isLoggedIn && (
+            <NavLink className="btn-primary ml-6" to="/sign-in">
+              Sign in
+            </NavLink>
+          )}
+
+          {isLoggedIn && !isAdmin && (
+            <NavLink className="btn-primary ml-6" to="/contact">
+              Let's Talk!
+            </NavLink>
+          )}
         </div>
       </nav>
     </header>

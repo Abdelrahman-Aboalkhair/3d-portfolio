@@ -12,8 +12,8 @@ const projectSchema = new mongoose.Schema(
       required: true,
     },
     image: {
-      public_id: { type: String },
-      secure_url: { type: String },
+      public_id: { type: String, required: true },
+      secure_url: { type: String, required: true },
     },
     technologies: {
       type: [String],

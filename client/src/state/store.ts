@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { authSlice } from './slices/AuthSlice'
+import authReducer from './slices/AuthSlice'
 import { apiSlice } from './slices/ApiSlice'
 
 const store = configureStore({
   reducer: {
-    auth: authSlice,
+    auth: authReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   devTools: true,
@@ -13,5 +13,8 @@ const store = configureStore({
       serializableCheck: false,
     }).concat(apiSlice.middleware),
 })
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
 export default store

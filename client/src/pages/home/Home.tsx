@@ -1,44 +1,48 @@
 import { Canvas } from '@react-three/fiber'
 import Experience from '../../Experience'
 import Graident from '../../assets/Gradient.svg'
-import { useTheme } from '../../context/ThemeContext'
+import Services from '../services/Services'
+import Projects from '../projects/Projects'
+import About from '../about/About'
+import Contact from '../contact/Contact'
 
 const Home = () => {
-  const { theme } = useTheme()
   return (
-    <div className="flex items-start justify-start w-full h-full px-[20px]">
-      <img
-        src={Graident}
-        className="absolute top-[10%] right-0 z-[-1000] opacity-100"
-        alt=""
-      />
-      {theme === 'dark' && (
+    <>
+      <div className="flex items-start justify-center w-full min-h-screen h-full">
         <img
           src={Graident}
-          className="absolute top-[16%] left-[-12%] z-[-1000] opacity-[20%]"
+          className="absolute top-[10%] right-0 z-[-1000] blur-xl"
           alt=""
         />
-      )}
-      <div className="flex flex-col items-start justify-start pt-[15%] pl-[9%]">
-        <h1
-          className="font-black text-[70px] leading-[6rem]
-      "
+
+        <div className="flex flex-col items-start justify-start pl-[10%] pt-[9%] ">
+          <h1 className="text-[85px] font-black leading-[6.2rem]">
+            Hey, I am{' '}
+            <span className="bg-gradient-to-r from-[#b47fff] via-[#a74eff] to-[#ea82ff] text-transparent bg-clip-text">
+              Abdelrahman
+            </span>
+          </h1>
+
+          <button className="btn-primary mt-[30px] ">Download CV</button>
+        </div>
+        <Canvas
+          camera={{
+            fov: 45,
+            near: 0.1,
+            far: 200,
+            position: [1, 2, 6],
+          }}
         >
-          Hey, I am <span className="text-[#7127BA]">"Your Name"</span>
-        </h1>
-        <button className="btn-primary mt-[10px] ">Download CV</button>
+          <Experience />
+        </Canvas>
       </div>
-      <Canvas
-        camera={{
-          fov: 45,
-          near: 0.1,
-          far: 200,
-          position: [1, 2, 6],
-        }}
-      >
-        <Experience />
-      </Canvas>
-    </div>
+
+      <Services />
+      <Projects />
+      <About />
+      <Contact />
+    </>
   )
 }
 

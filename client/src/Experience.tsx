@@ -1,6 +1,31 @@
-import { ContactShadows, Float, PresentationControls } from '@react-three/drei'
+import {
+  Center,
+  ContactShadows,
+  Float,
+  Html,
+  PresentationControls,
+  useProgress,
+} from '@react-three/drei'
 import MacbookModel from './models/MacbookModel'
 import useLeva from './hooks/useLeva'
+import { Suspense } from 'react'
+
+// Custom Loader Component
+const Loader = () => {
+  const { progress } = useProgress()
+  return (
+    <Html center>
+      <div className="text-center flex flex-col items-center justify-center mx-auto">
+        <div className="w-[350px] h-[12px] bg-gray-700 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-primary transition-all duration-200"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
+    </Html>
+  )
+}
 
 const Experience = () => {
   const { lightIntensity } = useLeva()
@@ -25,7 +50,9 @@ const Experience = () => {
             position={[0, 0.55, -1.15]}
           />
 
-          <MacbookModel />
+          <Suspense fallback={<Loader />}>
+            <MacbookModel />
+          </Suspense>
         </Float>
       </PresentationControls>
 
