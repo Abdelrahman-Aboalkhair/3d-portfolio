@@ -1,3 +1,4 @@
+import { uploadImageToCloudinary } from '../helpers/uploadImageToCloudinary.js'
 import Service from '../models/service.model.js'
 import User from '../models/user.model.js'
 import { v2 as cloudinary } from 'cloudinary'
@@ -6,32 +7,38 @@ export const createService = async (req, res) => {
   try {
     const { id: userId } = req.user
     const { title, description } = req.body
+    console.log('title: ', title)
+    console.log('description: ', description)
 
-    if (!title || !description || !userId) {
-      return res.status(400).json({ error: 'All fields are required' })
-    }
-    // if (image) {
-    //   const uploadedImage = await cloudinary.uploader.upload(image, {
-    //     folder: 'portfolio_services',
-    //   })
-    // }
+    const user = await User.findById(userId)
+    if (!user) return res.status(404).json({ error: 'User not found' })
 
-    const newService = new Service({
+    const serviceData = {
       title,
       description,
       user: userId,
-      // image: {
-      //   public_id: uploadedImage.public_id,
-      //   url: uploadedImage.secure_url,
-      // },
-    })
+      image: { public_id: title, secure_url: '' },
+    }
 
+    if (req.file) {
+      console.log('req.file: ', req.file)
+      const uploadResult = await uploadImageToCloudinary(req.file.path)
+      console.log('uploadResult: ', uploadResult)
+      if (uploadResult) {
+        serviceData.image.public_id = uploadResult.public_id
+        serviceData.image.secure_url = uploadResult.secure_url
+
+        // Remove the uploaded file from the server
+        fs.rmSync(`uploads/${req.file.filename}`)
+      }
+    }
+
+    const newService = new Service(serviceData)
     const savedService = await newService.save()
 
     // Add service to the user's services array if needed
-    await User.findByIdAndUpdate(userId, {
-      $push: { services: savedService._id },
-    })
+    user.services.push(savedService._id)
+    await user.save()
 
     res.status(201).json({
       message: 'Service created successfully',

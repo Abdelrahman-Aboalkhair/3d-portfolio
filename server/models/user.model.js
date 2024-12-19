@@ -49,7 +49,7 @@ userSchema.methods = {
     return jwt.sign(
       { id: this._id, email: this.email, role: this.role },
       process.env.JWT_SECRET,
-      { expiresIn: '1d' }
+      { expiresIn: '5d' }
     )
   },
 }

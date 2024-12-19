@@ -1,16 +1,15 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Layout from '../../layout/Layout'
+import Layout from '../layout/Layout'
 import { GoProjectRoadmap } from 'react-icons/go'
 import { IoIosCloseCircle } from 'react-icons/io'
 import { FaEdit, FaTrashAlt } from 'react-icons/fa'
 import {
   useGetAllProjectsQuery,
   useDeleteProjectMutation,
-} from '../../state/slices/ProjectSlice'
-import UpdateProject from '../../components/Projects/UpdateProject'
-import CreateProject from '../../components/Projects/CreateProject'
-import ProjectCard from '../../components/Projects/ProjectCard'
+} from '../state/slices/ProjectSlice'
+import UpdateProject from '../components/Projects/UpdateProject'
+import CreateProject from '../components/Projects/CreateProject'
 
 const ManageProjects = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -57,14 +56,14 @@ const ManageProjects = () => {
 
   return (
     <Layout>
-      <div className="flex justify-between items-center px-4 py-6">
-        <h1 className="text-3xl font-bold">Manage Projects</h1>
-        <button
-          onClick={handleCreateModalToggle}
-          className="text-3xl text-primary focus:outline-none"
-        >
-          <GoProjectRoadmap />
+      <div
+        onClick={handleCreateModalToggle}
+        className="flex items-center justify-end gap-5 mb-10 "
+      >
+        <button className="text-xl text-primary focus:outline-none capitalize">
+          <h1>Create new project</h1>
         </button>
+        <GoProjectRoadmap size={26} color="#7127BA" />
       </div>
 
       <div className="flex flex-col items-start justify-start gap-5">
@@ -72,31 +71,22 @@ const ManageProjects = () => {
           projects?.map(
             (project: {
               id: string
-              name: string
+              title: string
               description: string
               price: number
             }) => (
               <>
-                <ProjectCard
-                  key={project.id}
-                  image={project.image}
-                  title={project.title}
-                  description={project.description}
-                  technologies={project.technologies}
-                  gitHubLink={project.gitHubLink}
-                  liveLink={project.liveLink}
-                />
-
-                <div className="flex space-x-4">
+                <div className="flex space-x-6">
+                  <h1 className="font-medium text-xl mr-10">{project.title}</h1>
                   <button
                     onClick={() => handleUpdateModalToggle(project)}
-                    className="text-yellow-500"
+                    className="text-yellow-500 text-2xl"
                   >
                     <FaEdit />
                   </button>
                   <button
                     onClick={() => handleDelete(project._id)}
-                    className="text-red-500"
+                    className="text-red-500 text-xl"
                   >
                     <FaTrashAlt />
                   </button>
@@ -116,7 +106,7 @@ const ManageProjects = () => {
           >
             <div
               ref={createModalRef}
-              className="bg-white p-6 rounded-md w-full max-w-[40%] max-h-[80vh] overflow-y-auto"
+              className="bg-white dark:bg-slate-800 p-6 rounded-md w-full max-w-[40%] max-h-[80vh] overflow-y-auto"
             >
               <button
                 className="absolute top-4 right-4 text-3xl"

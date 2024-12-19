@@ -29,6 +29,7 @@ const CreateProject = ({ closeModal }) => {
     try {
       await createProject(formData).unwrap()
       toast.success('Project created successfully!')
+      reset()
       closeModal()
     } catch (error) {
       console.error('Error creating project:', error)
@@ -46,7 +47,7 @@ const CreateProject = ({ closeModal }) => {
   }
 
   return (
-    <div>
+    <div className="bg-wihte dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-6 rounded-md shadow-md">
       <h2 className="text-2xl font-bold mb-4">Create New Project</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -62,7 +63,7 @@ const CreateProject = ({ closeModal }) => {
             id="title"
             type="text"
             {...register('title', { required: 'Project title is required' })}
-            className="border-2 border-gray-300 rounded-md p-3 w-full bg-white dark:bg-gray-900"
+            className="border-2 border-gray-300 dark:border-gray-700 rounded-md p-3 w-full bg-white dark:bg-gray-900"
           />
           {errors.title && (
             <p className="text-red-600 text-sm mt-1">{errors.title.message}</p>
@@ -82,7 +83,7 @@ const CreateProject = ({ closeModal }) => {
             {...register('description', {
               required: 'Description is required',
             })}
-            className="border-2 border-gray-300 rounded-md p-3 w-full bg-white dark:bg-gray-900"
+            className="border-2 border-gray-300 dark:border-gray-700 rounded-md p-3 w-full bg-white dark:bg-gray-900"
           />
           {errors.description && (
             <p className="text-red-600 text-sm mt-1">
@@ -105,7 +106,7 @@ const CreateProject = ({ closeModal }) => {
             {...register('technologies', {
               required: 'Technologies are required',
             })}
-            className="border-2 border-gray-300 rounded-md p-3 w-full bg-white dark:bg-gray-900"
+            className="border-2 border-gray-300 dark:border-gray-700 rounded-md p-3 w-full bg-white dark:bg-gray-900"
           />
           {errors.technologies && (
             <p className="text-red-600 text-sm mt-1">
@@ -131,7 +132,7 @@ const CreateProject = ({ closeModal }) => {
                 message: 'Invalid GitHub link',
               },
             })}
-            className="border-2 border-gray-300 rounded-md p-3 w-full bg-white dark:bg-gray-900"
+            className="border-2 border-gray-300 dark:border-gray-700 rounded-md p-3 w-full bg-white dark:bg-gray-900"
           />
           {errors.githubLink && (
             <p className="text-red-600 text-sm mt-1">
@@ -154,7 +155,7 @@ const CreateProject = ({ closeModal }) => {
                 message: 'Invalid live link',
               },
             })}
-            className="border-2 border-gray-300 rounded-md p-3 w-full bg-white dark:bg-gray-900"
+            className="border-2 border-gray-300 dark:border-gray-700 rounded-md p-3 w-full bg-white dark:bg-gray-900"
           />
           {errors.liveLink && (
             <p className="text-red-600 text-sm mt-1">
@@ -173,7 +174,7 @@ const CreateProject = ({ closeModal }) => {
             type="file"
             accept="image/*"
             {...register('image')}
-            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-gray-200 file:text-gray-700 hover:file:bg-gray-300"
+            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-gray-200 dark:file:bg-gray-700 file:text-gray-700 dark:file:text-gray-300 hover:file:bg-gray-300 dark:hover:file:bg-gray-600"
             onChange={handleImagePreview}
           />
         </div>
@@ -184,7 +185,7 @@ const CreateProject = ({ closeModal }) => {
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-40 h-40 object-cover border border-gray-300 rounded-md"
+              className="w-40 h-40 object-cover border border-gray-300 dark:border-gray-700 rounded-md"
             />
           </div>
         )}
@@ -193,7 +194,7 @@ const CreateProject = ({ closeModal }) => {
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-primary hover:opacity-80 text-white py-2 px-4 rounded-md capitalize font-semibold"
+          className="bg-primary hover:opacity-80 text-white py-2 px-4 rounded-md capitalize font-semibold disabled:opacity-50"
         >
           {isLoading ? 'Submitting...' : 'Create Project'}
         </button>

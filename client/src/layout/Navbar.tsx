@@ -30,18 +30,19 @@ const Navbar = () => {
             className={({ isActive }) =>
               isActive ? 'link opacity-100' : 'link opacity-50'
             }
-            to="/services"
+            to="/projects"
           >
-            Services
+            Projects
           </NavLink>
           <NavLink
             className={({ isActive }) =>
               isActive ? 'link opacity-100' : 'link opacity-50'
             }
-            to="/projects"
+            to="/services"
           >
-            Projects
+            Services
           </NavLink>
+
           <NavLink
             className={({ isActive }) =>
               isActive ? 'link opacity-100' : 'link opacity-50'

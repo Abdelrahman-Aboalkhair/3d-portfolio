@@ -32,18 +32,6 @@ const Dashboard = () => {
           </button>
           <nav className="flex flex-col items-start gap-6 w-full ">
             <NavLink
-              end
-              className={({ isActive }) =>
-                isActive
-                  ? 'flex items-center gap-4 text-[17px] hover:cursor-pointer bg-[#7127ba] font-medium w-full py-2 px-2 rounded-md text-white'
-                  : 'flex items-center gap-4 text-[17px] hover:cursor-pointer w-full py-2 px-2 font-medium'
-              }
-              to={'/dashboard'}
-            >
-              <FaTachometerAlt />
-              {isSidebarOpen && 'Dashboard'}
-            </NavLink>
-            <NavLink
               className={({ isActive }) =>
                 isActive
                   ? 'flex items-center gap-4 text-[17px] hover:cursor-pointer bg-[#7127ba] font-medium w-full py-2 px-2 rounded-md text-white'
@@ -70,7 +58,6 @@ const Dashboard = () => {
 
         {/* Main Content */}
         <section className="flex-1 p-6">
-          <h1 className="text-3xl text-center font-bold">Dashboard</h1>
           <div>
             <Outlet />
           </div>

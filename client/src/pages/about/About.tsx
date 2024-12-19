@@ -1,36 +1,44 @@
-import Layout from '../../layout/Layout'
-import AboutImage from '../../assets/Me.png'
-import Graident from '../../assets/Gradient.svg'
+import { motion } from 'framer-motion'
+import VectorImage from '../../assets/vector_image.jpg'
 
 const About = () => {
   return (
-    <Layout>
-      <img
-        src={Graident}
-        className="absolute top-[10%] right-[9%] object-cover z-[-1] opacity-70 w-[500px] h-auto"
-        alt="Gradient background"
-      />
-      <main className="flex flex-col-reverse md:flex-row items-center justify-between px-6 md:px-12 py-16">
-        <div className="flex flex-col items-start justify-start gap-4 md:max-w-[50%]">
-          <p className="text-sm uppercase font-semibold tracking-wider text-gray-300 ">
-            About me
-          </p>
-          <h1 className="text-3xl md:text-6xl md:leading-[4.8rem] font-bold capitalize ">
-            My career as a <span className="">web developer</span>
+    <>
+      <main className="flex items-center justify-between px-[150px] py-20">
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3 }}
+          className="flex flex-col items-start justify-start gap-4 w-1/2"
+        >
+          <h1
+            className="relative text-start text-[25px] tracking-wider rounded-sm mb-6 font-medium
+                        before:content-[''] before:absolute before:left-0 before:bottom-[-0.5rem]
+                        before:h-1 before:w-[3rem] before:bg-primary before:rounded-lg w-fit"
+          >
+            About
           </h1>
-          <p className="text-gray-300 text-base leading-relaxed w-[90%]">
+          <h1 className="text-3xl md:text-6xl md:leading-[4.8rem] font-bold capitalize ">
+            My career as a <br />
+            <span className="text-primary">web developer</span>
+          </h1>
+
+          <p className="text-gray-400 dark:text-gray-300 text-base leading-relaxed w-[90%]">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
             assumenda, cupiditate aliquam unde provident sunt et ab expedita
           </p>
-        </div>
+        </motion.div>
 
-        <img
-          src={AboutImage}
-          className="w-[250px] md:w-[350px] rounded-lg shadow-lg"
+        <motion.img
+          initial={{ opacity: 0, y: -100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          src={VectorImage}
+          className="rounded-lg shadow-lg w-1/2"
           alt="About me"
         />
       </main>
-    </Layout>
+    </>
   )
 }
 

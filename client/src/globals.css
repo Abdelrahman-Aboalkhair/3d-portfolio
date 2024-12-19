@@ -20,7 +20,7 @@
 }
 
 .link {
-  @apply text-[15px];
+  @apply text-[15px] font-medium;
 }
 
 .btn-primary {

@@ -16,7 +16,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   image,
 }) => {
   return (
-    <motion.div className="flex items-center justify-center gap-5 bg-[#2C1250] rounded-lg p-4 border-t-4 border-[#9956d7] w-full">
+    <motion.div className="flex items-center justify-center gap-5 bg-[#2C1250] rounded-lg p-4 border-t-4 border-[#9956d7] w-full text-white">
       <img src={Illustration} className="object-cover w-fit" alt="" />
       <div className="flex flex-col items-start justify-start gap-3">
         <h2 className="text-2xl font-semibold">{title}</h2>

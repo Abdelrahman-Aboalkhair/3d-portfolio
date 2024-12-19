@@ -11,10 +11,10 @@ const serviceSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // image: {
-    //   public_id: { type: String, required: true },
-    //   url: { type: String, required: true },
-    // },
+    image: {
+      public_id: { type: String, required: true },
+      secure_url: { type: String, required: true },
+    },
 
     user: {
       type: mongoose.Schema.Types.ObjectId,

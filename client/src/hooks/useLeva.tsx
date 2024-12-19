@@ -20,7 +20,7 @@ export default function useLeva() {
       modelZ: { value: 0.9, min: -2, max: 5, step: 0.1 },
       lightIntensity: { value: 74, min: 0, max: 100, step: 1 },
       sliderX: { value: -2.28, min: -20, max: 5, step: 0.01 },
-      sliderY: { value: 0.81, min: -2, max: 5, step: 0.01 },
+      sliderY: { value: 0.65, min: -2, max: 5, step: 0.01 },
       sliderZ: { value: -5.72, min: -10, max: 5, step: 0.01 },
       slideRotateX: { value: 0, min: -10, max: 5, step: 0.01 },
       slideRotateY: { value: 0, min: -10, max: 5, step: 0.01 },

@@ -12,11 +12,16 @@ const SliderCard = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2500,
+    autoplaySpeed: 1500,
   }
 
   // Card data
   const cardData = [
+    {
+      title: '3D Developer',
+      description: 'Create visually stunning and interactive 3D models.',
+      image: Illustration1,
+    },
     {
       title: 'Mern Stack Developer',
       description: 'Build seamless and efficient web applications.',
@@ -27,19 +32,17 @@ const SliderCard = () => {
       description: 'Design modern and user-friendly interfaces.',
       image: Illustration2,
     },
-    {
-      title: '3D Developer',
-      description: 'Create visually stunning and interactive 3D models.',
-      image: Illustration1,
-    },
   ]
 
   return (
-    <div className="w-full max-w-md mx-auto transform rotate-[1deg]">
+    <div className="w-full max-w-md mx-auto transform ">
       <Slider {...settings}>
         {cardData.map((card, index) => (
           <>
-            <div className="flex flex-col items-center justify-center gap-2 text-white">
+            <div
+              key={index}
+              className="flex flex-col items-center justify-center gap-2 text-white"
+            >
               <h1 className="text-[30px] font-semibold whitespace-nowrap">
                 {card.title}
               </h1>
