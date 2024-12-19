@@ -6,6 +6,7 @@ import morgan from 'morgan'
 import userRoutes from './routes/user.routes.js'
 import projectRoutes from './routes/project.routes.js'
 import serviceRoutes from './routes/service.routes.js'
+import contactRoutes from './routes/contact.routes.js'
 import express from 'express'
 import connectToDb from './config/db.config.js'
 import errorMiddleware from './middlewares/error.middleware.js'
@@ -22,6 +23,7 @@ app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
 app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/projects', projectRoutes)
 app.use('/api/v1/services', serviceRoutes)
+app.use('/api/v1/contact', contactRoutes)
 
 app.all('*', (req, res) => {
   res.status(404).send('OOPS!! 404 page not found')

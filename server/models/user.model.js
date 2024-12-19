@@ -32,6 +32,12 @@ const userSchema = new mongoose.Schema(
         ref: 'Project',
       },
     ],
+    services: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Service',
+      },
+    ],
   },
   { timestamps: true }
 )

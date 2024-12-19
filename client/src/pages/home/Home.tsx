@@ -9,7 +9,7 @@ const Home = () => {
       <div className="flex items-start justify-center w-full min-h-screen h-full">
         <img
           src={Graident}
-          className="absolute top-[10%] right-[-3%] z-[-1000] blur-3xl w-[45rem]"
+          className="absolute top-[10%] right-0 z-[-1000] blur-3xl"
           alt=""
         />
 

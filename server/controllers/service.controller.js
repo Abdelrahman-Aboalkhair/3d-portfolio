@@ -2,6 +2,7 @@ import { uploadImageToCloudinary } from '../helpers/uploadImageToCloudinary.js'
 import Service from '../models/service.model.js'
 import User from '../models/user.model.js'
 import { v2 as cloudinary } from 'cloudinary'
+import fs from 'fs'
 
 export const createService = async (req, res) => {
   try {

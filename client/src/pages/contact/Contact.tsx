@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { motion } from 'framer-motion'
+import { axiosInstance } from '../../helpers/axiosInstance'
 
 const Contact = () => {
   const {
@@ -8,8 +9,13 @@ const Contact = () => {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (data) => {
-    console.log('Form Data:', data)
+  const onSubmit = async (data) => {
+    console.log('data: ', data)
+    try {
+      await axiosInstance.post('/contact', data)
+    } catch (error) {
+      console.log('ERROR sending email: ', error)
+    }
   }
 
   return (
@@ -26,7 +32,26 @@ const Contact = () => {
       >
         <div className="mb-4">
           <label htmlFor="name" className="block text-sm font-medium">
-            Name
+            Subject
+          </label>
+          <input
+            type="text"
+            id="subject"
+            {...register('subject', { required: 'Subject is required' })}
+            className="w-full mt-1 px-3 py-2 border rounded-lg bg-transparent 
+                         text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-700 
+                         focus:outline-none focus:ring-2 focus:ring-[#7127BA] focus:border-transparent"
+            placeholder="Please enter the subject of your message"
+          />
+          {errors.subject && (
+            <p className="mt-1 text-sm text-red-500">
+              {errors.subject.message}
+            </p>
+          )}
+        </div>
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-sm font-medium">
+            Your Name
           </label>
           <input
             type="text"
@@ -38,9 +63,7 @@ const Contact = () => {
             placeholder="Your Name"
           />
           {errors.name && (
-            <p className="mt-1 text-sm text-red-500">
-              {errors.name.toString()}
-            </p>
+            <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
           )}
         </div>
 
@@ -58,9 +81,7 @@ const Contact = () => {
             placeholder="Your Email"
           />
           {errors.email && (
-            <p className="mt-1 text-sm text-red-500">
-              {errors.email.toString()}
-            </p>
+            <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
           )}
         </div>
 
@@ -79,7 +100,7 @@ const Contact = () => {
           ></textarea>
           {errors.message && (
             <p className="mt-1 text-sm text-red-500">
-              {errors.message.toString()}
+              {errors.message.message}
             </p>
           )}
         </div>
