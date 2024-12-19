@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Layout from '../layout/Layout'
 import { GoProjectRoadmap } from 'react-icons/go'
 import { IoIosCloseCircle } from 'react-icons/io'
 import { FaEdit, FaTrashAlt } from 'react-icons/fa'
@@ -55,7 +54,7 @@ const ManageProjects = () => {
   }
 
   return (
-    <Layout>
+    <main className="flex flex-col items-start justify-start gap-10 p-10 min-h-screen">
       <div
         onClick={handleCreateModalToggle}
         className="flex items-center justify-end gap-5 mb-10 "
@@ -147,7 +146,7 @@ const ManageProjects = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </Layout>
+    </main>
   )
 }
 

@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
-import VectorImage from '../../assets/vector_image.jpg'
+import LaptopVector from '../../assets/laptop_illustration.png'
 
 const About = () => {
   return (
     <>
-      <main className="flex items-center justify-between px-[150px] py-20">
+      <main className="flex items-center justify-between px-[150px] min-h-screen mt-[-4rem]">
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
@@ -33,8 +33,8 @@ const About = () => {
           initial={{ opacity: 0, y: -100 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          src={VectorImage}
-          className="rounded-lg shadow-lg w-1/2"
+          src={LaptopVector}
+          className="rounded-lg w-1/2 object-cover h-fit"
           alt="About me"
         />
       </main>

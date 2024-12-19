@@ -1,18 +1,17 @@
 import { Canvas } from '@react-three/fiber'
 import Experience from '../../Experience'
-import Graident from '../../assets/Gradient.svg'
 import { motion } from 'framer-motion'
+import Abstract from '../../assets/abstract.png'
 
 const Home = () => {
   return (
     <>
       <div className="flex items-start justify-center w-full min-h-screen h-full">
         <img
-          src={Graident}
-          className="absolute top-[10%] right-0 z-[-1000] blur-3xl"
+          src={Abstract}
+          className="absolute top-[8%] right-[2%] z-[-1000] w-[37rem] h-[40rem] blur-[70px] opacity-50"
           alt=""
         />
-
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}

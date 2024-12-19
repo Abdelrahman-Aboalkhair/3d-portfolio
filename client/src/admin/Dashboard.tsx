@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <main className="min-h-screen w-full flex ">
+      <main className="min-h-screen w-full flex items-center justify-center ">
         {/* Sidebar */}
         <aside
           className={`${

@@ -3,6 +3,7 @@ import { useGetAllProjectsQuery } from '../../state/slices/ProjectSlice'
 import ProjectCard from '../../components/Projects/ProjectCard'
 import { motion } from 'framer-motion'
 import Loader from '../../components/Loader'
+import Abstract from '../../assets/abstract.png'
 
 const Projects: React.FC = () => {
   const { data, error, isLoading } = useGetAllProjectsQuery()
@@ -34,18 +35,23 @@ const Projects: React.FC = () => {
                 name: string
                 description: string
                 price: number
+                image: string
+                technologies: string[]
+                gitHubLink: string
+                liveLink: string
               },
               index
             ) => (
               <ProjectCard
-                key={project.id}
                 image={project.image}
                 title={project.title}
                 description={project.description}
                 technologies={project.technologies}
                 gitHubLink={project.gitHubLink}
                 liveLink={project.liveLink}
+                isSecondProject={index === 1}
                 isFirstProject={index === 0}
+                isThirdProject={index === 2}
               />
             )
           )}

@@ -25,7 +25,7 @@ const Services: React.FC = () => {
         <p className="text-center text-red-500">Error fetching services.</p>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-[26px]">
         {data &&
           data?.services?.map(
             (service: {
