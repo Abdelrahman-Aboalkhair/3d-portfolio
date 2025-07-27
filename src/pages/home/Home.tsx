@@ -9,12 +9,15 @@ const Home = () => {
       <div className="flex items-start justify-between w-full min-h-screen h-full relative overflow-hidden">
         <div className="p-6 text-left pt-[10%] pl-[10%] ">
           <h1 className="text-white text-[70px] font-extrabold leading-tight">
-            Hey, It's Abdelrahman<span className="text-primary">.</span>
+            Hey, It's Body<span className="text-primary">.</span>
           </h1>
 
           <p className="text-gray-400 mt-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi eaque
-            corporis dolore aperiam facere voluptas error aliquid neque.
+            A full-stack developer with a passion for creating innovative web
+            applications. I specialize in building responsive and user-friendly
+            interfaces, and I have a strong background in both front-end and
+            back-end development. Let's connect and build something amazing
+            together!
           </p>
         </div>
         {/* 3D Canvas Section - Expanded */}
