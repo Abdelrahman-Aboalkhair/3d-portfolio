@@ -1,6 +1,6 @@
-import Slider from 'react-slick'
-import Illustration1 from '../assets/Ilustration1.svg'
-import Illustration2 from '../assets/Illustration2.svg'
+import Slider from "react-slick";
+import Illustration1 from "../assets/Ilustration1.svg";
+import Illustration2 from "../assets/Illustration2.svg";
 
 const SliderCard = () => {
   // Slider settings
@@ -13,26 +13,26 @@ const SliderCard = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 1500,
-  }
+  };
 
   // Card data
   const cardData = [
     {
-      title: '3D Developer',
-      description: 'Create visually stunning and interactive 3D models.',
+      title: "3D Developer",
+      description: "Create visually stunning and interactive 3D models.",
       image: Illustration1,
     },
     {
-      title: 'Mern Stack Developer',
-      description: 'Build seamless and efficient web applications.',
+      title: "Full Stack Developer",
+      description: "Build seamless and efficient web applications.",
       image: Illustration1,
     },
     {
-      title: 'UI/UX Designer',
-      description: 'Design modern and user-friendly interfaces.',
+      title: "UI/UX Designer",
+      description: "Design modern and user-friendly interfaces.",
       image: Illustration2,
     },
-  ]
+  ];
 
   return (
     <div className="w-full max-w-md mx-auto transform ">
@@ -58,7 +58,7 @@ const SliderCard = () => {
         ))}
       </Slider>
     </div>
-  )
-}
+  );
+};
 
-export default SliderCard
+export default SliderCard;

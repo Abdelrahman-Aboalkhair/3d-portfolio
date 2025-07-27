@@ -1,42 +1,76 @@
-import { Canvas } from '@react-three/fiber'
-import Experience from '../../Experience'
-import { motion } from 'framer-motion'
-import Abstract from '../../assets/abstract.png'
+import { Canvas } from "@react-three/fiber";
+import Experience from "../../Experience";
+import { motion } from "framer-motion";
+import ParticleSystem from "../../components/ParticlesSystem";
 
 const Home = () => {
   return (
     <>
-      <div className="flex items-start justify-center w-full min-h-screen h-full">
-        <img
-          src={Abstract}
-          className="absolute top-[8%] right-[2%] z-[-1000] w-[37rem] h-[40rem] blur-[70px] opacity-50"
-          alt=""
-        />
-        <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.3 }}
-          className="flex flex-col items-start justify-start pl-[10%] pt-[9%] "
-        >
-          <h1 className="text-[85px] font-black leading-[6.2rem]">
-            Hey, I am <span className="text-primary">Abdelrahman</span>
+      <div className="flex items-start justify-between w-full min-h-screen h-full relative overflow-hidden">
+        <div className="p-6 text-left pt-[10%] pl-[10%] ">
+          <h1 className="text-white text-[70px] font-extrabold leading-tight">
+            Hey, It's Abdelrahman<span className="text-primary">.</span>
           </h1>
 
-          <button className="btn-primary mt-[30px] ">Download CV</button>
-        </motion.div>
-        <Canvas
-          camera={{
-            fov: 45,
-            near: 0.1,
-            far: 200,
-            position: [1, 2, 6],
+          <p className="text-gray-400 mt-2">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi eaque
+            corporis dolore aperiam facere voluptas error aliquid neque.
+          </p>
+        </div>
+        {/* 3D Canvas Section - Expanded */}
+        <div className="w-full h-screen relative">
+          <Canvas
+            camera={{
+              fov: 45,
+              near: 0.1,
+              far: 200,
+              position: [1, 2, 6],
+            }}
+            className="bg-transparent"
+          >
+            <ambientLight intensity={0.1} />
+            <ParticleSystem />
+            <Experience />
+          </Canvas>
+        </div>
+
+        <motion.div
+          animate={{
+            rotate: 360,
           }}
-        >
-          <Experience />
-        </Canvas>
+          transition={{
+            duration: 60,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full opacity-30"
+        />
+        <motion.div
+          animate={{
+            rotate: -360,
+          }}
+          transition={{
+            duration: 80,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="absolute bottom-1/3 right-1/3 w-1 h-1 bg-purple-400 rounded-full opacity-40"
+        />
+        <motion.div
+          animate={{
+            y: [-10, 10, -10],
+            opacity: [0.2, 0.5, 0.2],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-1/2 right-1/4 w-1.5 h-1.5 bg-white rounded-full"
+        />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

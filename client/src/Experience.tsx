@@ -1,18 +1,17 @@
 import {
-  Center,
   ContactShadows,
   Float,
   Html,
   PresentationControls,
   useProgress,
-} from '@react-three/drei'
-import MacbookModel from './models/MacbookModel'
-import useLeva from './hooks/useLeva'
-import { Suspense } from 'react'
+} from "@react-three/drei";
+import MacbookModel from "./models/MacbookModel";
+import useLeva from "./hooks/useLeva";
+import { Suspense } from "react";
 
 // Custom Loader Component
 const Loader = () => {
-  const { progress } = useProgress()
+  const { progress } = useProgress();
   return (
     <Html center>
       <div className="text-center flex flex-col items-center justify-center mx-auto">
@@ -24,14 +23,19 @@ const Loader = () => {
         </div>
       </div>
     </Html>
-  )
-}
+  );
+};
 
 const Experience = () => {
-  const { lightIntensity } = useLeva()
+  const { lightIntensity } = useLeva();
 
   return (
     <>
+      {/* Lighting */}
+      <ambientLight intensity={0.3} />
+      <directionalLight position={[10, 10, 5]} intensity={0.5} />
+      <pointLight position={[-10, -10, -10]} intensity={0.3} />
+
       <PresentationControls
         global
         rotation={[0.13, 0.1, 0]}
@@ -45,7 +49,7 @@ const Experience = () => {
             width={2.5}
             height={1.65}
             intensity={lightIntensity}
-            color={'#fff'}
+            color={"#fff"}
             rotation={[0.1, Math.PI, 0]}
             position={[0, 0.55, -1.15]}
           />
@@ -58,7 +62,7 @@ const Experience = () => {
 
       <ContactShadows position-y={-1.4} opacity={0.4} scale={5} blur={2.4} />
     </>
-  )
-}
+  );
+};
 
-export default Experience
+export default Experience;

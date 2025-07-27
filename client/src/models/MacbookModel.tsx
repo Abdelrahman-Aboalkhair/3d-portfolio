@@ -1,12 +1,12 @@
-import { Html, useGLTF } from '@react-three/drei'
-import useLeva from '../hooks/useLeva'
-import SliderCard from '../components/SliderCard'
+import { Html, useGLTF } from "@react-three/drei";
+import useLeva from "../hooks/useLeva";
+import SliderCard from "../components/SliderCard";
 
 const MacbookModel = () => {
-  const { modelY, modelX, modelZ, sliderX, sliderY, sliderZ } = useLeva()
+  const { modelY, modelX, modelZ, sliderX, sliderY, sliderZ } = useLeva();
   const mackbook = useGLTF(
-    'https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/macbook/model.gltf'
-  )
+    "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/macbook/model.gltf"
+  );
 
   return (
     <primitive position={[modelX, modelY, modelZ]} object={mackbook.scene}>
@@ -17,7 +17,7 @@ const MacbookModel = () => {
         <SliderCard />
       </Html>
     </primitive>
-  )
-}
+  );
+};
 
-export default MacbookModel
+export default MacbookModel;
