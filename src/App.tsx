@@ -11,11 +11,13 @@ import ManageServices from "./admin/ManageServices";
 import SignIn from "./pages/sign in/SignIn";
 import SignUp from "./pages/sign up/SignUp";
 import Footer from "./layout/Footer";
+
 import { ThemeProvider } from "./context/ThemeContext";
+
 
 const App = () => {
   return (
-    <ThemeProvider>
+    <>
       <Navbar />
 
       <Routes>
@@ -37,6 +39,9 @@ const App = () => {
       </Routes>
       <Footer />
     </ThemeProvider>
+=======
+    </>
+
   );
 };
 

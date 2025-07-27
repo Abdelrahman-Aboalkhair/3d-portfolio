@@ -2,7 +2,9 @@ name: CI/CD for React + Vite + Netlify
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
 
 jobs:
   build-and-deploy:
@@ -23,7 +25,12 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Deploy to Netlify
+      # Optional: Add tests here if needed
+      # - name: Run Tests
+      #   run: npm test
+
+      - name: Deploy to Netlify (production only)
+        if: github.ref == 'refs/heads/main'
         uses: nwtgck/actions-netlify@v2.0.0
         with:
           publish-dir: "./dist"
