@@ -13,8 +13,11 @@ const Home = () => {
           </h1>
 
           <p className="text-gray-400 mt-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi eaque
-            corporis dolore aperiam facere voluptas error aliquid neque.
+            A full-stack developer with a passion for creating innovative web
+            applications. I specialize in building responsive and user-friendly
+            interfaces, and I have a strong background in both front-end and
+            back-end development. Let's connect and build something amazing
+            together!
           </p>
         </div>
         {/* 3D Canvas Section - Expanded */}
