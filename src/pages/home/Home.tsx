@@ -9,7 +9,7 @@ const Home = () => {
       <div className="flex items-start justify-between w-full min-h-screen h-full relative overflow-hidden">
         <div className="p-6 text-left pt-[10%] pl-[10%] ">
           <h1 className="text-white text-[70px] font-extrabold leading-tight">
-            Hey, It's Body<span className="text-primary">.</span>
+            Hey, It's Abdelrahman<span className="text-primary">.</span>
           </h1>
 
           <p className="text-gray-400 mt-2">
